@@ -107,12 +107,12 @@ function ElectricityList({ bills, showAdd, handleCloseAdd }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {bills.map(bill => {
+                    {bills.map((bill, index) => {
                         return (
                             <tr>
-                                <td>{}</td>
-                                <td>{bill.id}</td>
-                                <td>{formatDateTime(bill.bill_date, DATE_CONVERSION_TYPE.DATE)}</td>
+                                <td>{index + 1}</td>
+                                <td>{bill[index]._id}</td>
+                                <td>{formatDateTime(bill[index].bill_date, DATE_CONVERSION_TYPE.DATE)}</td>
                                 <td className='d-flex justify-content-between'>
                                     <Button variant="success">
                                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
