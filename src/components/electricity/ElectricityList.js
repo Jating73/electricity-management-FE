@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { DatePicker } from 'antd';
 import { Button, Table, Modal } from 'react-bootstrap';
-import { sendPostRequest } from '../../utilities/utils';
-import { API_LIST } from '../../utilities/constants';
+import { sendPostRequest, formatDateTime } from '../../utilities/utils';
+import { API_LIST, DATE_CONVERSION_TYPE } from '../../utilities/constants';
 
 function ElectricityList({ bills, showAdd, handleCloseAdd }) {
 
@@ -107,29 +107,33 @@ function ElectricityList({ bills, showAdd, handleCloseAdd }) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td className='d-flex justify-content-between'>
-                            <Button variant="success">
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                                </svg>
-                            </Button>
-                            <Button variant="warning">
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
-                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                                    <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"></path>
-                                </svg>
-                            </Button>
-                            <Button variant="danger" onClick={deleteHandler}>
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clipRule="evenodd"></path>
-                                </svg>
-                            </Button>
-                        </td>
-                    </tr>
+                    {bills.map(bill => {
+                        return (
+                            <tr>
+                                <td>{}</td>
+                                <td>{bill.id}</td>
+                                <td>{formatDateTime(bill.bill_date, DATE_CONVERSION_TYPE.DATE)}</td>
+                                <td className='d-flex justify-content-between'>
+                                    <Button variant="success">
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                        </svg>
+                                    </Button>
+                                    <Button variant="warning">
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
+                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                            <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"></path>
+                                        </svg>
+                                    </Button>
+                                    <Button variant="danger" onClick={deleteHandler}>
+                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clipRule="evenodd"></path>
+                                        </svg>
+                                    </Button>
+                                </td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </Table>
 
