@@ -100,19 +100,17 @@ function ElectricityList({ bills, showAdd, handleCloseAdd }) {
             <Table responsive striped bordered hover>
                 <thead className='table-dark'>
                     <tr>
-                        <th>S.No.</th>
                         <th>Bill ID</th>
                         <th>Bill Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {bills.map((bill, index) => {
+                    {bills.map((bill) => {
                         return (
                             <tr>
-                                <td>{index + 1}</td>
-                                <td>{bill[index]._id}</td>
-                                <td>{formatDateTime(bill[index].bill_date, DATE_CONVERSION_TYPE.DATE)}</td>
+                                <td>{bill._id}</td>
+                                <td>{formatDateTime(bill.bill_date, DATE_CONVERSION_TYPE.DATE)}</td>
                                 <td className='d-flex justify-content-between'>
                                     <Button variant="success">
                                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ height: "1.5rem", width: "1.5rem" }}>
