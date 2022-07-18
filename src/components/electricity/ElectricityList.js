@@ -53,7 +53,7 @@ function ElectricityList({ bills, showAdd, handleCloseAdd }) {
         const response = await sendPostRequest(url, null, data, null);
 
         if (response.status === 200) {
-            setSuccess(`${response.message}: ${response.taskid}`);
+            setSuccess(`${response.message}`);
         } else {
             if (response.status === 400) {
                 setError(response.error)
@@ -108,7 +108,7 @@ function ElectricityList({ bills, showAdd, handleCloseAdd }) {
                 <tbody>
                     {bills.map((bill) => {
                         return (
-                            <tr>
+                            <tr key={bill._id}>
                                 <td>{bill._id}</td>
                                 <td>{formatDateTime(bill.bill_date, DATE_CONVERSION_TYPE.DATE)}</td>
                                 <td className='d-flex justify-content-between'>
@@ -168,13 +168,51 @@ function ElectricityList({ bills, showAdd, handleCloseAdd }) {
                         <div className='mt-3 mb-3'>
                             <input className="form-control" type="number" placeholder="Amount Paid" ref={paymentAmountInput} />
                         </div>
+                        <div className='mt-3 mb-3 d-grid gap-2'>
+                            <Button variant='success' size="lg">Add Bill</Button>
+                        </div>
                     </form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseAdd}>
-                        Close
-                    </Button>
-                </Modal.Footer>
+            </Modal>
+
+            {/* Edit New Bill Modal */}
+            <Modal show={showAdd} onHide={handleCloseAdd}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Bill</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {success && (<div className="alert alert-success" role="alert">
+                        {success}
+                    </div>)
+                    }
+                    {error && (<div className="alert alert-danger" role="alert">
+                        {error}
+                    </div>)
+                    }
+
+                    <form onSubmit={addHandler}>
+                        <div className='mt-3 mb-3'>
+                            <label>Bill Date</label>
+                            <DatePicker onChange={onChangeBillDate} onOk={onOk} style={{ width: '100%' }} />
+                        </div>
+                        <div className='mt-3 mb-3'>
+                            <label>Paid Date</label>
+                            <DatePicker onChange={onChangePaidDate} onOk={onOk} style={{ width: '100%' }} />
+                        </div>
+                        <div className='mt-3 mb-3'>
+                            <input className="form-control" type="number" placeholder="Units Consumed in KWH" ref={unitConsumedInput} />
+                        </div>
+                        <div className='mt-3 mb-3'>
+                            <input className="form-control" type="number" placeholder="Bill Amount" ref={billAmountInput} />
+                        </div>
+                        <div className='mt-3 mb-3'>
+                            <input className="form-control" type="number" placeholder="Amount Paid" ref={paymentAmountInput} />
+                        </div>
+                        <div className='mt-3 mb-3 d-grid gap-2'>
+                            <Button variant='success' size="lg">Update Bill</Button>
+                        </div>
+                    </form>
+                </Modal.Body>
             </Modal>
         </>
     )
